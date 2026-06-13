@@ -1,0 +1,61 @@
+const readline = require("readline");
+
+const rl = readline.createInterface({
+input: process.stdin,
+output: process.stdout,
+});
+function pergunta(msg) {
+return new Promise((resolve) => rl.question(msg, resolve));
+}
+const fila = [];
+
+async function main() {
+while (true) {
+// Exibição do Menu e Fila
+console.log("\n-------------------------");
+console.log(" Central de Atendimento");
+console.log("-------------------------");
+
+if (fila.length === 0) {
+  console.log("Fila vazia.");
+} else {
+  console.log("Aguardando:");
+  for (let i = 0; i < fila.length; i++) {
+    console.log(`${i + 1}º ${fila[i]}`);
+  }
+}
+console.log("-------------------------");
+console.log("1 - Novo Cliente");
+console.log("2 - Atender Cliente");
+console.log("3 - Sair");
+console.log("-------------------------");
+
+const opcao = await pergunta("Escolha: ");
+
+// Lógica das opções
+if (opcao === "1") {
+  const nome = await pergunta("Nome: ");
+  if (nome.trim() !== "") {
+    fila.push(nome);
+    console.log(` Adicionado: ${nome}`);
+  } else {
+    console.log("Erro: nome inválido.");
+  }
+  
+} else if (opcao === "2") {
+  if (fila.length === 0) {
+    console.log("Erro: ninguém para atender.");
+  } else {
+    const cliente = fila.shift(); // Remove e pega o primeiro da fila
+    console.log(`Atendendo: ${cliente}`);
+  }
+} else if (opcao === "3") {
+  console.log("Encerrado.");
+  rl.close();
+  break; // Sai do loop infinito
+} else {
+  console.log("Opção inválida. Digite 1, 2 ou 3.");
+}
+}
+}
+main();
