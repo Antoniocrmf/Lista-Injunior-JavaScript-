@@ -1,0 +1,49 @@
+function compactarTexto(texto) {
+if (texto === "") {
+return "";
+}
+
+let resultado = "";
+let contador = 1;
+
+for (let i = 0; i < texto.length; i++) {
+let letraAtual = texto[i];
+let proximaLetra = texto[i + 1];
+
+if (letraAtual === proximaLetra) {
+  contador++;
+} else {
+  resultado = resultado + letraAtual + contador;
+  
+  contador = 1; 
+}
+}
+
+return resultado;
+}
+// Testes :)
+
+const testes = [
+{ entrada: "hhhhkktt", esperado: "h4k2t2" },
+{ entrada: "aaabbcccc", esperado: "a3b2c4" },
+{ entrada: "aAbBcc", esperado: "a1A1b1B1c2" },
+{ entrada: "aaaa", esperado: "a4" },
+{ entrada: "abcd", esperado: "a1b1c1d1" },
+{ entrada: "", esperado: "" },
+];
+
+for (let item of testes) {
+let textoOriginal = item.entrada;
+let resultadoEsperado = item.esperado;
+let resultadoCalculado = compactarTexto(textoOriginal);
+let status = "";
+if (resultadoCalculado === resultadoEsperado) {
+status = "S";
+} else {
+status = "X";
+}
+
+console.log(${status} Entrada: "${textoOriginal}");
+console.log(   Saída:    "${resultadoCalculado}");
+console.log(   Esperado: "${resultadoEsperado}"\n);
+}
