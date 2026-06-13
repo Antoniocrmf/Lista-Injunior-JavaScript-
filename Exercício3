@@ -1,0 +1,37 @@
+const rl = require("readline").createInterface({ input: process.stdin, output: process.stdout });
+const p = (msg) => new Promise((res) => rl.question(msg, res));
+
+(async () => {
+// bhaskara
+const a = parseFloat(await p("a: ")), b = parseFloat(await p("b: ")), c = parseFloat(await p("c: "));
+
+// O "!a" já verifica se 'a' é 0 ou NaN de uma vez só
+if (!a || isNaN(b) || isNaN(c)) {
+console.log("Erro: entradas inválidas ou a = 0.");
+} else {
+const d = b ** 2 - 4 * a * c;
+if (d < 0) console.log("Δ < 0: Sem raízes reais.");
+else {
+const r = Math.sqrt(d);
+console.log(d === 0
+? X = ${(-b / (2 * a)).toFixed(4)}
+: X1 = ${((-b + r) / (2 * a)).toFixed(4)} | X2 = ${((-b - r) / (2 * a)).toFixed(4)}
+);
+}
+}
+// Fatorial
+while (true) {
+const n = Number(await p("\nFatorial de (inteiro >= 0): "));
+if (Number.isInteger(n) && n >= 0) {
+let res = 1n;
+for (let i = 2n; i <= BigInt(n); i++) res *= i;
+console.log(${n}! = ${res});
+} else {
+console.log("Erro: digite apenas inteiros positivos.");
+}
+
+if ((await p("Outro? (S/N): ")).trim().toLowerCase().startsWith("n")) break;
+}
+console.log("Encerrado.");
+rl.close();
+})();
