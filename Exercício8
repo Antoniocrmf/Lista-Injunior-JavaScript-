@@ -1,0 +1,51 @@
+const readline = require("readline");
+
+const rl = readline.createInterface({
+input: process.stdin,
+output: process.stdout,
+});
+
+function pergunta(msg) {
+return new Promise((resolve) => rl.question(msg, resolve));
+}
+
+async function main() {
+const consumos = [50, 120, 30, 200, 80, 100, 15, 300];
+
+console.log("-----------------------------------");
+console.log(" Analisador de Consumo (kWh)");
+console.log("-----------------------------------");
+console.log("Consumos:", consumos);
+console.log("-----------------------------------\n");
+
+let limite = -1;
+
+// Repete a pergunta até o usuário digitar um número válido (maior ou igual a zero)
+while (limite < 0 || isNaN(limite)) {
+const entrada = await pergunta("Limite econômico (kWh): ");
+limite = parseFloat(entrada);
+
+if (limite < 0 || isNaN(limite)) {
+  console.log("Erro: digite um número positivo válido.\n");
+}
+}
+
+console.log(\nLimite definido: ${limite} kWh);
+console.log("-----------------------------------");
+for (let i = 0; i < consumos.length; i++) {
+let consumoAtual = consumos[i];
+let categoria = "";
+
+if (consumoAtual < limite) {
+  categoria = "Econômico";
+} else if (consumoAtual === limite) {
+  categoria = "No Limite";
+} else {
+  categoria = "Sócio da Enel";
+}
+console.log(`Aparelho ${i + 1}: ${categoria} (${consumoAtual} kWh)`);
+}
+console.log("-----------------------------------");
+rl.close();
+}
+main();
