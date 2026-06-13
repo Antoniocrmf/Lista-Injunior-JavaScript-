@@ -1,0 +1,22 @@
+const rl = require("readline").createInterface({ input: process.stdin, output: process.stdout });
+const pergunta = (msg) => new Promise((resolve) => rl.question(msg, resolve));
+(async () => {
+const a = parseFloat(await pergunta("a: "));
+const b = parseFloat(await pergunta("b: "));
+const c = parseFloat(await pergunta("c: "));
+
+if (a === 0) return console.log("Erro: 'a' não pode ser 0.") || rl.close();
+
+const delta = b ** 2 - 4 * a * c;
+console.log(\nΔ = ${delta});
+if (delta > 0) {
+const raiz = Math.sqrt(delta);
+console.log(x1 = ${((-b + raiz) / (2 * a)).toFixed(4)});
+console.log(x2 = ${((-b - raiz) / (2 * a)).toFixed(4)});
+} else if (delta === 0) {
+console.log(x = ${(-b / (2 * a)).toFixed(4)});
+} else {
+console.log("Sem raízes reais.");
+}
+rl.close();
+})();
