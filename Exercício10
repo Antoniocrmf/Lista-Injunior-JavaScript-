@@ -1,0 +1,123 @@
+const readline = require("readline");
+
+const rl = readline.createInterface({
+input: process.stdin,
+output: process.stdout,
+});
+
+function pergunta(msg) {
+return new Promise((resolve) => rl.question(msg, resolve));
+}
+
+// Array do time
+
+const time = [];
+
+// Funções
+
+function adicionarJogador(nome, idade, posicao, pontuacao) {
+const jogador = { nome, idade, posicao, pontuacao };
+time.push(jogador);
+console.log(\n✔ Jogador "${nome}" adicionado com sucesso!);
+}
+
+function buscarPorPosicao(posicao) {
+const encontrados = time.filter(
+(j) => j.posicao.toLowerCase() === posicao.toLowerCase()
+);
+
+if (encontrados.length === 0) {
+console.log(\nNenhum jogador encontrado na posição "${posicao}".);
+return;
+}
+
+console.log(\nJogadores na posição "${posicao}":);
+encontrados.forEach((j, i) => {
+console.log(
+  ${i + 1}. ${j.nome} | Idade: ${j.idade} | Pontuação: ${j.pontuacao}
+);
+});
+}
+
+function listarTime() {
+if (time.length === 0) {
+console.log("\nNenhum jogador cadastrado.");
+return;
+}
+
+console.log("\n=== Jogadores do Time ===");
+time.forEach((j, i) => {
+console.log(
+  ${i + 1}. ${j.nome} | Idade: ${j.idade} | Posição: ${j.posicao} | Pontuação: ${j.pontuacao}
+);
+});
+}
+
+function calcularPontuacaoMedia() {
+if (time.length === 0) {
+console.log("\nNenhum jogador cadastrado para calcular a média.");
+return;
+}
+
+const total = time.reduce((acc, j) => acc + j.pontuacao, 0);
+const media = total / time.length;
+console.log(\nPontuação média do time: ${media.toFixed(2)});
+}
+
+// menu
+function exibirMenu() {
+console.log("\n--------------------------------------------------------");
+console.log(" Gerenciador de Time ");
+console.log("--------------------------------------------------------");
+console.log(" 1 - Adicionar jogador ");
+console.log(" 2 - Buscar por posição ");
+console.log(" 3 - Listar time ");
+console.log(" 4 - Calcular pontuação média");
+console.log(" 5 - Sair ");
+console.log("--------------------------------------------------------");
+}
+async function main() {
+console.log("Bem-vindo ao Sistema de Gerenciamento de Time!");
+while (true) {
+exibirMenu();
+const opcao = await pergunta("\nEscolha uma opção: ");
+switch (opcao.trim()) {
+case "1": {
+console.log("\n--- Adicionar Jogador ---");
+const nome = await pergunta("Nome: ");
+const idadeStr = await pergunta("Idade: ");
+const posicao = await pergunta("Posição: ");
+const pontuacaoStr = await pergunta("Pontuação: ");
+const idade = parseInt(idadeStr);
+const pontuacao = parseFloat(pontuacaoStr);
+if (!nome || isNaN(idade) || !posicao || isNaN(pontuacao)) {
+console.log("\nErro: dados inválidos. Tente novamente.");
+break;
+}
+adicionarJogador(nome, idade, posicao, pontuacao);
+break;
+}
+case "2": {
+const posicao = await pergunta("\nDigite a posição a buscar: ");
+buscarPorPosicao(posicao.trim());
+break;
+}
+case "3": {
+listarTime();
+break;
+}
+case "4": {
+calcularPontuacaoMedia();
+break;
+}
+case "5": {
+console.log("\nEncerrando o programa. Até logo!");
+rl.close();
+return;
+}
+default:
+console.log("\nOpção inválida. Digite um número de 1 a 5.");
+}
+}
+}
+main();
