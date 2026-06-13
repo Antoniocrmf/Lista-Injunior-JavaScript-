@@ -1,0 +1,13 @@
+// Taxas de câmbio
+const TAXA_DOLAR = 5.70;
+const TAXA_EURO = 6.10;
+
+const reais = 1000.00;
+
+const dolar = reais / TAXA_DOLAR;
+const euro = reais / TAXA_EURO;
+
+console.log(" Conversor ");
+console.log(Valor em reais:      R$ ${reais.toFixed(2)});
+console.log(Dólar americano:     US$ ${dolar.toFixed(2)});
+console.log(Euro:                € ${euro.toFixed(2)});
