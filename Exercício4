@@ -1,0 +1,42 @@
+const readline = require("readline");
+
+const rl = readline.createInterface({
+input: process.stdin,
+output: process.stdout,
+});
+function pergunta(msg) {
+return new Promise((resolve) => rl.question(msg, resolve));
+}
+
+async function main() {
+console.log("=== Verificador de Palíndromo ===\n");
+while (true) {
+const frase = await pergunta("Digite uma frase: ");
+
+if (frase.trim() === "") {
+  console.log("Erro: a frase não pode ser vazia.\n");
+  continue; // Volta para o início do while
+}
+const limpa = frase.toLowerCase().replace(/[^a-záéíóúàâêôãõüç0-9]/g, "");
+const invertida = limpa.split("").reverse().join("");
+console.log(`\nOriginal:  "${frase}"`);
+console.log(`Tratada:   "${limpa}"`);
+console.log(`Invertida: "${invertida}"`);
+if (limpa === invertida) {
+  console.log(`\n "${frase}" é um palíndromo!`);
+} else {
+  console.log(`\n✘ "${frase}" NÃO é um palíndromo.`);
+}
+const resposta = await pergunta("\nverificar outra frase? (S/N): ");
+if (resposta.trim().toUpperCase() !== "S") {
+  console.log("Programa encerrado. Até logo!");
+  break; // Sai do loop while
+}
+
+console.log("\n---------------------------\n");
+}
+
+rl.close();
+}
+
+main();
